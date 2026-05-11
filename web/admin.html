@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zync — Админ</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/admin.css" />
+</head>
+<body>
+  <div class="admin">
+    <header class="admin-topbar">
+      <span class="admin-brand">Zync<span>.</span>Admin</span>
+      <div class="admin-topbar-actions">
+        <a href="/" class="admin-back">← На главную</a>
+        <button class="logout-btn" id="btnLogout">Выйти</button>
+      </div>
+    </header>
+
+    <div class="admin-body">
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statTotal">—</div>
+          <div class="stat-label">Всего пользователей</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value accent" id="statAdmins">—</div>
+          <div class="stat-label">Администраторов</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statUsers">—</div>
+          <div class="stat-label">Пользователей</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value green" id="statRooms">—</div>
+          <div class="stat-label">Активных комнат</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="users">Пользователи</button>
+        <button class="tab" data-tab="rooms">Комнаты</button>
+      </div>
+
+      <!-- Пользователи -->
+      <div id="tabUsers">
+        <div class="table-toolbar">
+          <h2 class="admin-title">Пользователи</h2>
+          <div class="toolbar-right">
+            <input id="searchInput" class="search-input" placeholder="Поиск по имени или email..." />
+            <select id="roleFilter" class="role-filter">
+              <option value="">Все роли</option>
+              <option value="user">Пользователи</option>
+              <option value="admin">Администраторы</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Пользователь</th>
+                <th>Email</th>
+                <th>Роль</th>
+                <th>Дата регистрации</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="usersBody">
+              <tr><td colspan="5" class="admin-empty">Загрузка...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Комнаты -->
+      <div id="tabRooms" style="display:none">
+        <div class="table-toolbar">
+          <h2 class="admin-title">Активные комнаты</h2>
+          <button class="btn-refresh" id="btnRefreshRooms">↻ Обновить</button>
+        </div>
+        <div class="table-wrap">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>ID комнаты</th>
+                <th>Участников</th>
+                <th>Участники</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="roomsBody">
+              <tr><td colspan="4" class="admin-empty">Загрузка...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

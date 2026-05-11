@@ -1,0 +1,12 @@
+log-level: info
+packages:
+  github.com/stazoloto/zync/internal/repository:
+    config:
+      all: true
+      dir: internal/mocks/repository
+      outpkg: mocksrepo
+  github.com/stazoloto/zync/internal/service:
+    config:
+      all: true
+      dir: internal/mocks/service
+      outpkg: mocksservice

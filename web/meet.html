@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zync Meeting</title>
+  <link rel="stylesheet" href="/meet.css" />
+</head>
+<body>
+  <div class="meet">
+
+    <!-- Главное видео (спотлайт) -->
+    <div class="spotlight" id="spotlight">
+      <video id="mainVideo" autoplay muted playsinline></video>
+
+      <!-- Тост чата -->
+      <div class="chat-toast" id="chatToast"></div>
+
+      <!-- Приглашение когда один в комнате -->
+      <div class="invite-overlay" id="inviteOverlay">
+        <p class="invite-text">Вы одни в комнате. Пригласите участников.</p>
+        <button class="invite-copy-btn" id="btnCopyLink">
+          <img src="/static/assets/icons/Add.svg" alt="" width="16" height="16" />
+          <span id="copyLinkText">Копировать ссылку</span>
+        </button>
+        <p class="invite-room">Комната: <span id="inviteRoom">—</span></p>
+      </div>
+    </div>
+
+    <!-- Блок участников (плавает над нижней панелью) -->
+    <div class="participants-block layout-view" id="participantsBlock">
+      <div class="participants-header">
+        <span class="participants-label">Участники <span id="participantCount">1</span></span>
+        <div class="layout-btns">
+          <button class="layout-btn active" data-layout="view" title="Полоска">
+            <img src="/static/assets/icons/View.svg" alt="" />
+          </button>
+          <button class="layout-btn" data-layout="strip" title="Панель">
+            <img src="/static/assets/icons/Rectangle 23.svg" alt="" />
+          </button>
+          <button class="layout-btn" data-layout="compact" title="Компактный">
+            <img src="/static/assets/icons/Rectangle 24.svg" alt="" />
+          </button>
+        </div>
+      </div>
+      <div class="filmstrip-wrap">
+        <button class="filmstrip-nav" id="btnFilmPrev">
+          <img src="/static/assets/icons/Chevron.svg" alt="" style="transform:rotate(90deg)" />
+        </button>
+        <div class="filmstrip" id="filmstrip"></div>
+        <button class="filmstrip-nav" id="btnFilmNext">
+          <img src="/static/assets/icons/Chevron.svg" alt="" style="transform:rotate(-90deg)" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Нижняя панель: только кнопки управления -->
+    <div class="bottom-panel" id="bottomPanel">
+      <div class="controlbar">
+        <div class="ctrl-group">
+          <button id="btnMute" class="ctrl-btn muted" title="Микрофон">
+            <img id="micIcon" src="/static/assets/icons/AudioOff.svg" alt="" />
+          </button>
+          <button id="btnCam" class="ctrl-btn muted" title="Камера">
+            <img id="camIcon" src="/static/assets/icons/CameraOff.svg" alt="" />
+          </button>
+          <button id="btnShare" class="ctrl-btn" title="Демонстрация экрана">
+            <img src="/static/assets/icons/ScreenShare.svg" alt="" />
+          </button>
+        </div>
+
+        <div class="ctrl-group">
+          <button id="btnInvite" class="ctrl-btn" title="Пригласить">
+            <img src="/static/assets/icons/Add.svg" alt="" />
+          </button>
+          <button id="btnChat" class="ctrl-btn" title="Чат">
+            <div style="position:relative;display:flex;align-items:center;justify-content:center;">
+              <img src="/static/assets/icons/Chat.svg" alt="" />
+              <span class="chat-badge" id="chatBadge"></span>
+            </div>
+          </button>
+        </div>
+
+        <div class="ctrl-group">
+          <button id="btnLeave" class="ctrl-btn leave-btn" title="Покинуть">
+            <img src="/static/assets/icons/out.svg" alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Панель участников (список, слева) -->
+    <div class="participants-panel" id="participantsPanel">
+      <div class="chat-header">
+        <span class="chat-title">Участники (<span id="participantsPanelCount">1</span>)</span>
+        <button class="chat-close" id="btnCloseParticipants">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="participants-panel-list" id="participantsList"></div>
+    </div>
+
+    <!-- Панель чата (справа) -->
+    <div class="chat-panel" id="chatPanel">
+      <div class="chat-header">
+        <span class="chat-title">Чат</span>
+        <button class="chat-close" id="btnCloseChat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="chat-log" id="chatLog">
+        <div class="chat-empty" id="chatEmpty">Сообщений пока нет</div>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <input id="chatInput" placeholder="Напишите сообщение..." autocomplete="off" />
+        <div style="position:relative">
+          <button type="button" class="chat-emoji" id="btnEmoji" title="Emoji">
+            <img src="/static/assets/icons/Emoticon.svg" alt="" />
+          </button>
+          <div class="emoji-picker" id="emojiPicker">
+            <input class="emoji-picker-search" id="emojiSearch" placeholder="Поиск..." />
+            <div class="emoji-picker-cats" id="emojiCats"></div>
+            <div class="emoji-grid" id="emojiGrid"></div>
+          </div>
+        </div>
+        <button type="submit" class="chat-send">
+          <img src="/static/assets/icons/Send.svg" alt="" />
+        </button>
+      </form>
+    </div>
+
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

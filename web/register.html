@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zync — Регистрация</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="auth-page">
+
+    <!-- Шаг 1: Email -->
+    <section id="screenEmail" class="auth-card">
+      <span class="auth-brand">Zync.</span>
+      <h1 class="auth-title">Регистрация</h1>
+      <p class="auth-subtitle">Введите email для создания аккаунта</p>
+      <form id="formEmail">
+        <div class="field-wrap">
+          <input id="inputEmail" class="field-input" type="email" placeholder=" " autocomplete="email" required />
+          <label class="field-label" for="inputEmail">Email</label>
+        </div>
+        <div id="errorEmail" class="auth-error" style="display:none"></div>
+        <button id="btnSendCode" class="primary-btn" type="submit">Продолжить</button>
+      </form>
+      <p class="auth-switch">Уже есть аккаунт? <a href="/login.html">Войти</a></p>
+    </section>
+
+    <!-- Шаг 2: Код подтверждения -->
+    <section id="screenCode" class="auth-card" style="display:none">
+      <span class="auth-brand">Zync.</span>
+      <h1 class="auth-title">Проверьте почту</h1>
+      <p id="codeHint" class="auth-subtitle">Код отправлен на ваш email</p>
+      <form id="formCode">
+        <div class="field-wrap">
+          <input id="inputCode" class="field-input" type="text" inputmode="numeric" maxlength="6" placeholder=" " required />
+          <label class="field-label" for="inputCode">Код из письма</label>
+        </div>
+        <div id="errorCode" class="auth-error" style="display:none"></div>
+        <button id="btnVerifyCode" class="primary-btn" type="submit">Подтвердить</button>
+      </form>
+      <p class="auth-switch"><a href="#" id="btnBackToEmail">← Изменить email</a></p>
+    </section>
+
+    <!-- Шаг 3: Имя и пароль -->
+    <section id="screenPassword" class="auth-card" style="display:none">
+      <span class="auth-brand">Zync.</span>
+      <h1 class="auth-title">Создайте аккаунт</h1>
+      <p class="auth-subtitle">Заполните данные профиля</p>
+      <form id="formPassword">
+        <div class="field">
+          <label for="inputFirstName">Имя</label>
+          <input id="inputFirstName" type="text" autocomplete="given-name" placeholder="Иван" required />
+        </div>
+        <div class="field">
+          <label for="inputLastName">Фамилия</label>
+          <input id="inputLastName" type="text" autocomplete="family-name" placeholder="Иванов" required />
+        </div>
+        <div class="field">
+          <label for="inputPassword">Пароль</label>
+          <input id="inputPassword" type="password" autocomplete="new-password" placeholder="Минимум 8 символов" required />
+        </div>
+        <div class="field">
+          <label for="inputPasswordConfirm">Повторите пароль</label>
+          <input id="inputPasswordConfirm" type="password" autocomplete="new-password" placeholder="Повторите пароль" required />
+        </div>
+        <div id="errorPassword" class="auth-error" style="display:none"></div>
+        <button id="btnRegister" class="primary-btn" type="submit">Создать аккаунт</button>
+      </form>
+      <p class="auth-switch">Уже есть аккаунт? <a href="/login.html">Войти</a></p>
+    </section>
+
+  </main>
+  <script src="/register.js"></script>
+</body>
+</html>

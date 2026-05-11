@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zync — Главная</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="home">
+    <header class="home-topbar">
+      <span class="home-brand">Zync.</span>
+      <div class="home-user">
+        <span id="userEmail"></span>
+        <a id="btnRegisterNav" href="/register.html" class="register-nav-btn">Регистрация</a>
+        <button class="logout-btn" id="btnLogout">Выйти</button>
+      </div>
+    </header>
+
+    <div class="home-body">
+      <div class="home-content">
+        <div class="home-cards">
+          <div class="home-card">
+            <h3>Новая встреча</h3>
+            <p>Создайте комнату и пригласите участников по ссылке</p>
+            <button class="btn-accent" id="btnCreate">Создать встречу</button>
+          </div>
+
+          <div class="home-card">
+            <h3>Войти в комнату</h3>
+            <p>Введите ID комнаты чтобы присоединиться к встрече</p>
+            <div class="field">
+              <input id="roomInput" placeholder="ID комнаты" autocomplete="off" />
+            </div>
+            <button class="btn-outline" id="btnJoin">Войти</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/index.js"></script>
+</body>
+</html>

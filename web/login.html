@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zync — Вход</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="auth-page">
+
+    <!-- Шаг 1: Email -->
+    <section id="stepEmail" class="auth-card">
+      <span class="auth-brand">Zync.</span>
+      <h1 class="auth-title">Войти в систему</h1>
+      <p class="auth-subtitle">Введите ваш email чтобы продолжить</p>
+      <form id="formEmail" novalidate>
+        <div class="field-wrap">
+          <input id="inputEmail" class="field-input" type="email" placeholder=" " autocomplete="email" />
+          <label class="field-label" for="inputEmail">Электронная почта</label>
+        </div>
+        <div id="errorEmail" class="field-error">
+          <span id="errorEmailText"></span>
+        </div>
+        <button class="primary-btn" id="btnNext" type="submit">Далее</button>
+      </form>
+      <p class="auth-switch">Нет аккаунта? <a href="/register.html">Зарегистрироваться</a></p>
+    </section>
+
+    <!-- Шаг 2: Пароль -->
+    <section id="stepPassword" class="auth-card" style="display:none">
+      <span class="auth-brand">Zync.</span>
+      <h1 class="auth-title">Введите пароль</h1>
+      <p id="emailDisplay" class="auth-email-display"></p>
+      <form id="formPassword" novalidate>
+        <div class="field-wrap">
+          <input id="inputPassword" class="field-input" type="password" placeholder=" " autocomplete="current-password" />
+          <label class="field-label" for="inputPassword">Пароль</label>
+        </div>
+        <div id="errorPassword" class="field-error">
+          <span id="errorPasswordText"></span>
+        </div>
+        <button class="primary-btn" id="btnLogin" type="submit">Войти</button>
+      </form>
+      <button class="auth-back" id="btnBack">← Изменить email</button>
+    </section>
+
+  </main>
+  <script src="/login.js"></script>
+</body>
+</html>
