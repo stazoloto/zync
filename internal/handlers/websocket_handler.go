@@ -221,6 +221,13 @@ func (h *WebSocketHandler) handleSignal(
 			return err
 		}
 
+		if role, err := h.rooms.GetParticipantRole(ctx, roomID, peerID); err != nil {
+			h.logger.Warn("get participant role failed", zap.Error(err))
+		} else {
+			rolePayload, _ := json.Marshal(map[string]string{"role": string(role)})
+			out <- domain.SignalMessage{Type: "room_role", Payload: rolePayload}
+		}
+
 		if err := h.signaling.Join(ctx, roomID, peerID, out); err != nil {
 			return err
 		}

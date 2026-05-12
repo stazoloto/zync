@@ -54,6 +54,8 @@ type RoomService interface {
 	SubscribeToRoom(ctx context.Context, roomID string) (repository.ChatSubscription, error)
 	// IsParticipant проверяет, является ли пользователь участником комнаты.
 	IsParticipant(ctx context.Context, roomID, userID string) (bool, error)
+	// GetParticipantRole возвращает роль пользователя в комнате.
+	GetParticipantRole(ctx context.Context, roomID, userID string) (domain.ParticipantRole, error)
 }
 
 type MediaGateway interface {

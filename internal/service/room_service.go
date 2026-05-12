@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/stazoloto/zync/internal/domain"
 	"github.com/stazoloto/zync/internal/repository"
 	"go.uber.org/zap"
 )
@@ -143,6 +144,10 @@ func (s *roomService) PublishMessage(ctx context.Context, roomID string, payload
 func (s *roomService) SubscribeToRoom(ctx context.Context, roomID string) (repository.ChatSubscription, error) {
 	s.logger.Info("subscribe to room", zap.String("room", roomID))
 	return s.chatSubscriber.Subscribe(ctx, roomID)
+}
+
+func (s *roomService) GetParticipantRole(ctx context.Context, roomID, userID string) (domain.ParticipantRole, error) {
+	return s.participants.GetRole(roomID, userID)
 }
 
 func (s *roomService) IsParticipant(ctx context.Context, roomID, userID string) (bool, error) {

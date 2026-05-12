@@ -96,6 +96,26 @@ function updateParticipantCount() {
   if (participantsOpen) renderParticipantsPanel();
 }
 
+const MIC_MUTED_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
+
+function makeTileOverlay({ role, micMuted, name } = {}) {
+  const nameEl = document.createElement("span");
+  nameEl.className = "tile-name";
+  nameEl.textContent = name || "Участник";
+
+  const micEl = document.createElement("span");
+  micEl.className = "tile-mic-badge";
+  micEl.innerHTML = MIC_MUTED_SVG;
+  micEl.style.display = micMuted ? "" : "none";
+
+  const moderEl = document.createElement("span");
+  moderEl.className = "tile-moderator";
+  moderEl.textContent = "Модератор";
+  moderEl.style.display = (role === "host") ? "" : "none";
+
+  return { nameEl, micEl, moderEl };
+}
+
 function createSelfTile() {
   const tile = document.createElement("article");
   tile.className = "film-tile selected";
@@ -110,15 +130,12 @@ function createSelfTile() {
   video.muted       = true;
   video.playsInline = true;
 
-  const me = document.createElement("span");
-  me.className = "film-me-chip";
-  me.textContent = "Я";
+  const { nameEl, micEl, moderEl } = makeTileOverlay({ name: myName });
+  nameEl.id  = "selfTileName";
+  micEl.id   = "selfTileMic";
+  moderEl.id = "selfTileModerLabel";
 
-  const label = document.createElement("span");
-  label.className = "film-label";
-  label.textContent = myName;
-
-  tile.append(avatar, video, me, label);
+  tile.append(avatar, video, moderEl, micEl, nameEl);
   tile.onclick = () => setSpotlight("self");
   filmstrip.appendChild(tile);
   return video;
@@ -131,14 +148,13 @@ function addRemoteTile(streamId, stream) {
   tile.className = "film-tile";
   tile.dataset.id = streamId;
 
-  // In compact mode, hide all non-first tiles
   if (currentLayout === "compact" && filmstrip.children.length > 0) {
     tile.style.display = "none";
   }
 
   const avatar = document.createElement("div");
   avatar.className = "film-avatar";
-  avatar.textContent = "U";
+  avatar.textContent = "?";
 
   const video = document.createElement("video");
   video.autoplay    = true;
@@ -146,11 +162,9 @@ function addRemoteTile(streamId, stream) {
   video.playsInline = true;
   video.srcObject   = stream;
 
-  const label = document.createElement("span");
-  label.className = "film-label";
-  label.textContent = "Участник";
+  const { nameEl, micEl, moderEl } = makeTileOverlay({ name: "Участник" });
 
-  tile.append(avatar, video, label);
+  tile.append(avatar, video, moderEl, micEl, nameEl);
   tile.onclick = () => setSpotlight(streamId);
   filmstrip.appendChild(tile);
 
@@ -634,6 +648,15 @@ async function start() {
     const msg = JSON.parse(e.data);
 
     if (msg.type === "chat") { appendChat(msg.payload || {}); return; }
+
+    if (msg.type === "room_role") {
+      const role = msg.payload?.role;
+      if (role === "host") {
+        const el = document.getElementById("selfTileModerLabel");
+        if (el) el.style.display = "";
+      }
+      return;
+    }
 
     if (msg.type === "peer_left") {
       for (const id of (msg.payload?.stream_ids || [])) {

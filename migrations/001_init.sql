@@ -19,6 +19,7 @@ CREATE TABLE room_participants (
    id BIGSERIAL PRIMARY KEY,
    room_id TEXT NOT NULL,
    user_id TEXT NOT NULL,
+   role TEXT NOT NULL DEFAULT 'participant',
    joined_at TIMESTAMP NOT NULL DEFAULT now(),
    left_at TIMESTAMP,
 

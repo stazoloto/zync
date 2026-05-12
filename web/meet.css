@@ -331,30 +331,46 @@ html, body { height: 100%; overflow: hidden; background: #000; font-family: "Int
   background: #2a2b32;
 }
 
-.film-label {
+.tile-name {
   position: absolute;
-  bottom: 5px;
+  bottom: 6px;
   left: 7px;
   right: 7px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   color: #fff;
-  text-shadow: 0 1px 4px rgba(0,0,0,.8);
+  text-shadow: 0 1px 4px rgba(0,0,0,.9);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.film-me-chip {
+.tile-mic-badge {
   position: absolute;
-  top: 5px;
-  left: 6px;
-  font-size: 10px;
-  font-weight: 700;
+  bottom: 24px;
+  left: 7px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background: #e03c6a;
   color: #fff;
-  background: #0b5cff;
-  padding: 1px 5px;
-  border-radius: 3px;
+}
+
+.tile-mic-badge svg { width: 11px; height: 11px; }
+
+.tile-moderator {
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  background: #2563eb;
+  padding: 2px 7px;
+  border-radius: 5px;
 }
 
 /* ── Filmstrip navigation arrows ────────────────────────────────────────── */

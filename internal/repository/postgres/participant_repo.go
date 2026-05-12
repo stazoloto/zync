@@ -2,6 +2,8 @@ package postgres
 
 import (
 	"time"
+
+	"github.com/stazoloto/zync/internal/domain"
 )
 
 type ParticipantRepo struct {
@@ -10,8 +12,14 @@ type ParticipantRepo struct {
 
 func (r *ParticipantRepo) JoinRoom(roomID, userID string) error {
 	_, err := r.db.Exec(`
-		INSERT INTO room_participants (room_id, user_id)
-		VALUES ($1, $2)
+		INSERT INTO room_participants (room_id, user_id, role)
+		VALUES ($1, $2, CASE
+			WHEN NOT EXISTS (
+				SELECT 1 FROM room_participants
+				WHERE room_id = $1 AND left_at IS NULL
+			) THEN 'host'
+			ELSE 'participant'
+		END)
 	`, roomID, userID)
 	return err
 }
@@ -61,4 +69,14 @@ func (r *ParticipantRepo) HasActiveParticipants(roomID string) (bool, error) {
 		)
 	`, roomID).Scan(&exists)
 	return exists, err
+}
+
+func (r *ParticipantRepo) GetRole(roomID, userID string) (domain.ParticipantRole, error) {
+	var role domain.ParticipantRole
+	err := r.db.QueryRow(`
+		SELECT role FROM room_participants
+		WHERE room_id = $1 AND user_id = $2 AND left_at IS NULL
+		ORDER BY joined_at DESC LIMIT 1
+	`, roomID, userID).Scan(&role)
+	return role, err
 }

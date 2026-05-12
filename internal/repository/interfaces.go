@@ -40,6 +40,8 @@ type ParticipantRepository interface {
 	GetActiveParticipants(roomID string) ([]string, error)
 	// HasActiveParticipants проверяет, есть ли в комнате активные участники.
 	HasActiveParticipants(roomID string) (bool, error)
+	// GetRole возвращает роль участника в комнате.
+	GetRole(roomID, userID string) (domain.ParticipantRole, error)
 }
 
 type PresenceRepository interface {
